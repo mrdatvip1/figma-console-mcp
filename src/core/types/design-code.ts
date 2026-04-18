@@ -86,8 +86,11 @@ export interface CodeSpec {
 		supportsDisabled?: boolean;
 		/** Whether component has error/invalid state (aria-invalid) */
 		supportsError?: boolean;
-		/** Minimum rendered dimensions in px [width, height] */
-		renderedSize?: [number, number];
+		/** Minimum rendered dimensions in px */
+		renderedSize?: {
+			width: number;
+			height: number;
+		};
 	};
 
 	/** Metadata from code */

@@ -153,7 +153,7 @@ function compareAccessibility(
 
 	// 8. Target Size
 	if (ca.renderedSize) {
-		const [codeWidth, codeHeight] = ca.renderedSize;
+		const { width: codeWidth, height: codeHeight } = ca.renderedSize;
 		const designWidth = node.absoluteBoundingBox?.width || node.size?.x;
 		const designHeight = node.absoluteBoundingBox?.height || node.size?.y;
 		if (designWidth && designHeight) {
@@ -509,7 +509,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 			const d: ParityDiscrepancy[] = [];
 			compareAccessibility(
 				{ name: "Button", description: "", absoluteBoundingBox: { width: 120, height: 44 } },
-				{ accessibility: { renderedSize: [80, 30] } },
+				{ accessibility: { renderedSize: { width: 80, height: 30 } } },
 				d,
 			);
 			const issue = d.find((i) => i.property === "targetSize" && i.severity === "major");
@@ -520,7 +520,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 			const d: ParityDiscrepancy[] = [];
 			compareAccessibility(
 				{ name: "Button", description: "", absoluteBoundingBox: { width: 24, height: 24 } },
-				{ accessibility: { renderedSize: [20, 20] } },
+				{ accessibility: { renderedSize: { width: 20, height: 20 } } },
 				d,
 			);
 			const issue = d.find((i) => i.property === "targetSize" && i.severity === "critical");
@@ -531,7 +531,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 			const d: ParityDiscrepancy[] = [];
 			compareAccessibility(
 				{ name: "Button", description: "", absoluteBoundingBox: { width: 120, height: 44 } },
-				{ accessibility: { renderedSize: [118, 42] } },
+				{ accessibility: { renderedSize: { width: 118, height: 42 } } },
 				d,
 			);
 			expect(d.find((i) => i.property === "targetSize")).toBeUndefined();
@@ -541,7 +541,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 			const d: ParityDiscrepancy[] = [];
 			compareAccessibility(
 				{ name: "Button", description: "", size: { x: 120, y: 44 } },
-				{ accessibility: { renderedSize: [50, 20] } },
+				{ accessibility: { renderedSize: { width: 50, height: 20 } } },
 				d,
 			);
 			expect(d.find((i) => i.property === "targetSize")).toBeDefined();
@@ -601,7 +601,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 						supportsDisabled: false,
 						supportsError: false,
 						contrastRatio: 2.5,
-						renderedSize: [20, 16],
+						renderedSize: { width: 20, height: 16 },
 						keyboardInteractions: ["Enter", "Space"],
 					},
 				},
@@ -640,7 +640,7 @@ describe("compareAccessibility (Phase 4 parity checks)", () => {
 						focusVisible: true,
 						supportsDisabled: true,
 						contrastRatio: 7.2,
-						renderedSize: [118, 42],
+						renderedSize: { width: 118, height: 42 },
 						keyboardInteractions: ["Enter", "Space"],
 					},
 				},

@@ -261,6 +261,28 @@ describe("Design-Code Tools Schema Compatibility", () => {
 		expect(jsonSchema).toHaveProperty("type");
 		expect(jsonSchema.type).toBe("object");
 	});
+
+	it("renderedSize should avoid tuple JSON Schema in MCP tool inputs", () => {
+		const { z } = require("zod");
+		const { zodToJsonSchema } = require("zod-to-json-schema");
+
+		const codeSpecSchema = z.object({
+			accessibility: z.object({
+				renderedSize: z.object({
+					width: z.number(),
+					height: z.number(),
+				}).optional(),
+			}).optional(),
+		});
+
+		const jsonSchema = zodToJsonSchema(codeSpecSchema) as any;
+		const renderedSize = jsonSchema.properties?.accessibility?.properties?.renderedSize;
+
+		expect(renderedSize?.type).toBe("object");
+		expect(renderedSize?.properties?.width?.type).toBe("number");
+		expect(renderedSize?.properties?.height?.type).toBe("number");
+		expect(renderedSize?.items).toBeUndefined();
+	});
 });
 
 describe("Description Parser", () => {

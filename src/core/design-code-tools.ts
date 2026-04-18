@@ -1332,7 +1332,7 @@ function compareAccessibility(node: any, codeSpec: CodeSpec, discrepancies: Pari
 
 	// ---- 8. Target Size Parity ----
 	if (ca.renderedSize) {
-		const [codeWidth, codeHeight] = ca.renderedSize;
+		const { width: codeWidth, height: codeHeight } = ca.renderedSize;
 		const designWidth = node.absoluteBoundingBox?.width || node.size?.x;
 		const designHeight = node.absoluteBoundingBox?.height || node.size?.y;
 
@@ -2555,7 +2555,10 @@ const codeSpecSchema = z.object({
 		semanticElement: z.string().optional().describe("Semantic HTML element (e.g., 'button', 'a', 'input')"),
 		supportsDisabled: z.boolean().optional().describe("Whether code supports disabled/aria-disabled state"),
 		supportsError: z.boolean().optional().describe("Whether code supports aria-invalid/error state"),
-		renderedSize: z.tuple([z.number(), z.number()]).optional().describe("Rendered size [width, height] in px"),
+		renderedSize: z.object({
+			width: z.number(),
+			height: z.number(),
+		}).optional().describe("Rendered size in px"),
 	}).optional().describe("Accessibility properties from code. Tip: use figma_scan_code_accessibility with mapToCodeSpec:true to auto-generate this from component HTML."),
 	metadata: z.object({
 		name: z.string().optional(),
